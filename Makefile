@@ -6,8 +6,8 @@ DEPS=pca9865.h
 .o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS) $(OBJECTS) $(LDFLAGS)
 
-all:pca9685.o
-	$(CC) -o pca9685 pca9685.o $(CFLAGS) $(LDFLAGS) 
+all:pca9685.c main.c
+	$(CC) -o pca9685 pca9685.c main.c $(CFLAGS) $(LDFLAGS) 
 
 .PHONY: clean
 clean:
