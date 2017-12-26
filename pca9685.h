@@ -1,6 +1,8 @@
 #ifndef __PCA9685_H__
 #define __PCA9685_H__
-#else
+
+#include <stdint.h>
+
 
 // ~~~~~~~~~~~~~~
 // Mode Registers
@@ -8,7 +10,7 @@
 
 #define PCA9685_MODE1 			0x00 	//Mode register 1
 
-typedef union 
+typedef union pca9685_mode1_t
 {
 	struct
 	{
@@ -247,7 +249,7 @@ typedef union
 {
 	struct
 	{
-		uint8_t PreScale:8;
+		uint8_t preScale:8;
 	}fields;
 	uint8_t raw;	
 }PCA9685_PreScale_t;

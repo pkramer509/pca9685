@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <wiringPi.h>
 
 #include "pca9685.h"
@@ -7,7 +8,16 @@
 
 void PCA9685_WriteRegister(uint8_t value)
 {
+    PCA9685_MODE1_t mode1;
 
+    mode1.raw = 0;
+
+    mode1.fields.restart = 1;
+    mode1.fields.extClk = 1;
+    mode1.fields.allCall = 1;
+
+    printf("%d\n", mode1);
+                            
 }
 
 uint8_t PCA9685_ReadRegister(uint8_t address)

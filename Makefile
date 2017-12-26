@@ -1,15 +1,12 @@
 CC=gcc
 CFLAGS=-Wall
 LDFLAGS=-lwiringPi
-DEPS=pca9865.h
-
-.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS) $(OBJECTS) $(LDFLAGS)
+DEPS=pca9685.h
 
 all:pca9685.c main.c
-	$(CC) -o pca9685 pca9685.c main.c $(CFLAGS) $(LDFLAGS) 
+	$(CC) -o test pca9685.c main.c $(DEPS) $(CFLAGS) $(LDFLAGS) 
 
 .PHONY: clean
 clean:
-	rm -f *~ *.o pca9685
+	rm -f *~ *.o test
 
