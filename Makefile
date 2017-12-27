@@ -123,19 +123,6 @@ PCA9685_Test/fast:
 	$(MAKE) -f CMakeFiles/PCA9685_Test.dir/build.make CMakeFiles/PCA9685_Test.dir/build
 .PHONY : PCA9685_Test/fast
 
-#=============================================================================
-# Target rules for targets named PCA9685_Lib
-
-# Build rule for target.
-PCA9685_Lib: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 PCA9685_Lib
-.PHONY : PCA9685_Lib
-
-# fast build rule for target.
-PCA9685_Lib/fast:
-	$(MAKE) -f CMakeFiles/PCA9685_Lib.dir/build.make CMakeFiles/PCA9685_Lib.dir/build
-.PHONY : PCA9685_Lib/fast
-
 src/main.o: src/main.c.o
 
 .PHONY : src/main.o
@@ -170,7 +157,6 @@ src/pca9685.o: src/pca9685.c.o
 # target to build an object file
 src/pca9685.c.o:
 	$(MAKE) -f CMakeFiles/PCA9685_Test.dir/build.make CMakeFiles/PCA9685_Test.dir/src/pca9685.c.o
-	$(MAKE) -f CMakeFiles/PCA9685_Lib.dir/build.make CMakeFiles/PCA9685_Lib.dir/src/pca9685.c.o
 .PHONY : src/pca9685.c.o
 
 src/pca9685.i: src/pca9685.c.i
@@ -180,7 +166,6 @@ src/pca9685.i: src/pca9685.c.i
 # target to preprocess a source file
 src/pca9685.c.i:
 	$(MAKE) -f CMakeFiles/PCA9685_Test.dir/build.make CMakeFiles/PCA9685_Test.dir/src/pca9685.c.i
-	$(MAKE) -f CMakeFiles/PCA9685_Lib.dir/build.make CMakeFiles/PCA9685_Lib.dir/src/pca9685.c.i
 .PHONY : src/pca9685.c.i
 
 src/pca9685.s: src/pca9685.c.s
@@ -190,7 +175,6 @@ src/pca9685.s: src/pca9685.c.s
 # target to generate assembly for a file
 src/pca9685.c.s:
 	$(MAKE) -f CMakeFiles/PCA9685_Test.dir/build.make CMakeFiles/PCA9685_Test.dir/src/pca9685.c.s
-	$(MAKE) -f CMakeFiles/PCA9685_Lib.dir/build.make CMakeFiles/PCA9685_Lib.dir/src/pca9685.c.s
 .PHONY : src/pca9685.c.s
 
 # Help Target
@@ -202,7 +186,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... PCA9685_Test"
-	@echo "... PCA9685_Lib"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
