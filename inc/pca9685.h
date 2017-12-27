@@ -1,6 +1,17 @@
 #ifndef __PCA9685_H__
 #define __PCA9685_H__
 
+#define BYTE_TO_BINARY_PATTERN "%c%c%c%c%c%c%c%c"
+#define BYTE_TO_BINARY(byte)  \
+  (byte & 0x80 ? '1' : '0'), \
+  (byte & 0x40 ? '1' : '0'), \
+  (byte & 0x20 ? '1' : '0'), \
+  (byte & 0x10 ? '1' : '0'), \
+  (byte & 0x08 ? '1' : '0'), \
+  (byte & 0x04 ? '1' : '0'), \
+  (byte & 0x02 ? '1' : '0'), \
+  (byte & 0x01 ? '1' : '0')
+
 #include <stdint.h>
 
 
@@ -14,14 +25,14 @@ typedef union pca9685_mode1_t
 {
 	struct
 	{
-		uint8_t restart:1;
-		uint8_t extClk:1;
-		uint8_t autoIncrement:1;
-		uint8_t sleep:1;
-		uint8_t sub1:1;
-		uint8_t sub2:1;
-		uint8_t sub3:1;
 		uint8_t allCall:1;
+		uint8_t sub3:1;
+		uint8_t sub2:1;
+		uint8_t sub1:1;
+		uint8_t sleep:1;
+		uint8_t autoIncrement:1;
+		uint8_t extClk:1;
+		uint8_t restart:1;
 	}fields;
 	uint8_t raw;	
 } PCA9685_MODE1_t;
@@ -32,11 +43,11 @@ typedef union
 {
 	struct
 	{
-		uint8_t reserved:3;
-		uint8_t invert:1;
-		uint8_t outputChange:1;
-		uint8_t outputDrive:1;
 		uint8_t outputNegation:2;
+		uint8_t outputDrive:1;
+		uint8_t outputChange:1;
+		uint8_t invert:1;
+		uint8_t reserved:3;
 	}fields;
 	uint8_t raw;	
 }PCA9685_MODE2_t;
@@ -53,8 +64,8 @@ typedef union
 {
 	struct
 	{
+		uint8_t reserved:1;
 		uint8_t address:7;
-		uint8_t reserved:1; 
 	}fields;
 	uint8_t raw;	
 }PCA9685_Address_t;
@@ -211,9 +222,9 @@ typedef union
 {
 	struct
 	{
-		uint8_t reserved:3;
+		uint8_t value:4;
 		uint8_t fullOn:1;
-		uint8_t value:4; 
+		uint8_t reserved:3;
 	}fields;
 	uint8_t raw;
 }PCA9685_LED_ON_H_t;
@@ -231,9 +242,9 @@ typedef union
 {
 	struct
 	{
+		uint8_t value:4;
+		uint8_t fullOn:1;
 		uint8_t reserved:3;
-		uint8_t fullOff:1;
-		uint8_t value:4; 
 	}fields;
 	uint8_t raw;
 }PCA9685_LED_OFF_H_t;

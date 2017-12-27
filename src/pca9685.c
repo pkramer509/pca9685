@@ -13,12 +13,59 @@ void PCA9685_WriteRegister(uint8_t value)
     mode1.raw = 0;
 
     mode1.fields.restart = 1;
-    mode1.fields.extClk = 1;
-    mode1.fields.autoIncrement = 1;
-    mode1.fields.sleep = 1;
+    mode1.fields.extClk = 0;
+    mode1.fields.autoIncrement = 0;
+    mode1.fields.sleep = 0;
+    mode1.fields.sub1 = 0;
+    mode1.fields.sub2 = 0;
+    mode1.fields.sub3 = 0;
+    mode1.fields.allCall = 0;
 
-    printf("%x\t%x\n", mode1, mode1.raw);
-                            
+
+    printf("%x\t"BYTE_TO_BINARY_PATTERN, mode1, BYTE_TO_BINARY(mode1.raw));
+    printf("\n");
+
+    mode1.raw = 0;
+
+    mode1.fields.restart = 0;
+    mode1.fields.extClk = 1;
+    mode1.fields.autoIncrement = 0;
+    mode1.fields.sleep = 0;
+    mode1.fields.sub1 = 0;
+    mode1.fields.sub2 = 0;
+    mode1.fields.sub3 = 0;
+    mode1.fields.allCall = 0;
+
+    printf("%x\t"BYTE_TO_BINARY_PATTERN, mode1, BYTE_TO_BINARY(mode1.raw));
+    printf("\n");
+
+    mode1.raw = 0;
+
+    mode1.fields.restart = 1;
+    mode1.fields.extClk = 1;
+    mode1.fields.autoIncrement = 0;
+    mode1.fields.sleep = 0;
+    mode1.fields.sub1 = 0;
+    mode1.fields.sub2 = 0;
+    mode1.fields.sub3 = 0;
+    mode1.fields.allCall = 0;
+
+    printf("%x\t"BYTE_TO_BINARY_PATTERN, mode1, BYTE_TO_BINARY(mode1.raw));
+    printf("\n");
+
+    mode1.raw = 0;
+
+    mode1.fields.restart = 0;
+    mode1.fields.extClk = 0;
+    mode1.fields.autoIncrement = 1;
+    mode1.fields.sleep = 0;
+    mode1.fields.sub1 = 0;
+    mode1.fields.sub2 = 0;
+    mode1.fields.sub3 = 0;
+    mode1.fields.allCall = 0;
+
+    printf("%x\t"BYTE_TO_BINARY_PATTERN, mode1, BYTE_TO_BINARY(mode1.raw));
+    printf("\n");
 }
 
 uint8_t PCA9685_ReadRegister(uint8_t address)
