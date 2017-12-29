@@ -16,15 +16,16 @@ int main()
     PCA9685_MODE1_t mode1;
     PCA9685_MODE2_t mode2;
 
-    printf(ANSI_COLOR_BLUE "Entry\n" ANSI_COLOR_RESET);
+    printf(ANSI_COLOR_BLUE "Entry" ANSI_COLOR_RED "\n");    //ANSI_COLOR_RED catches SUDO exception, clears after init.
 
+    PCA9685_init(0x60, 200);
+    printf(ANSI_COLOR_RESET);
     PCA9685_Restart();
 
     mode1.fields.extClk = 0;
     mode1.fields.sleep = 1;
     mode1.fields.allCall = 0;
 
-    PCA9685_init(0x60, 200);
     PCA9685_WriteRegister(PCA9685_MODE1, mode1.raw);
 
     value = PCA9685_ReadRegister(PCA9685_MODE1);
@@ -45,6 +46,14 @@ int main()
     PCA9685_WriteRegister(PCA9685_MODE1, mode1.raw);
     PCA9685_PrintStatus();
     printf("\n");
+
+    PCA9685_Channel_e channel;
+
+    channel = all;
+
+    value = all;
+
+    printf("%d\n", channel);
 
     printf(ANSI_COLOR_BLUE "Exit\n" ANSI_COLOR_RESET);
     return 0;

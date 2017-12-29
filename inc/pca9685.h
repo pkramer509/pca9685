@@ -1,3 +1,25 @@
+/**
+ * @file pca9685.h
+ * @author Patrick Kramer
+ * @copyright MIT License
+ * @date Dec 28 2017
+ * @brief Describes the Register Space and defines the access function prototypes for the library.
+ *
+ * Each available register address is provided a PC9685_XXXX preprocessor mnemonic as well as a
+ * relevant access type with field and raw register access:
+ * MODE1 Register       PCA9685_MODE1_t
+ * MODE2 Register       PCA9685_MODE2_t
+ * Address Registers    PCA9685_Address_t
+ * LED Registers        PCA9685_LED_ON_L_t
+ *                      PCA9685_LED_ON_H_t
+ *                      PCA9685_LED_OFF_L_t
+ *                      PCA9685_LED_OFF_H_t
+ * Prescaler Resgister  PCA9685_PreScale_t
+ *
+ * These register types can be defined using the fields struct and then can be deployed using
+ * the raw variable.
+ */
+
 #ifndef __PCA9685_H__
 #define __PCA9685_H__
 
@@ -21,10 +43,8 @@
 
 #define PCA9685_MODE1 			0x00 	//Mode register 1
 
-typedef union pca9685_mode1_t
-{
-	struct
-	{
+typedef union {
+	struct {
 		uint8_t allCall:1;
 		uint8_t sub3:1;
 		uint8_t sub2:1;
@@ -39,10 +59,8 @@ typedef union pca9685_mode1_t
 
 #define PCA9685_MODE2 			0x01 	//Mode register 2
 
-typedef union 
-{
-	struct
-	{
+typedef union {
+	struct {
 		uint8_t outputNegation:2;
 		uint8_t outputDrive:1;
 		uint8_t outputChange:1;
@@ -60,10 +78,8 @@ typedef union
 #define PCA9685_SUBADR3 		0x04 	//I2C-bus subaddress 3
 #define PCA9685_ALLCALLADR 		0x05 	//LED All Call I2C-busaddress
 
-typedef union 
-{
-	struct
-	{
+typedef union {
+	struct {
 		uint8_t reserved:1;
 		uint8_t address:7;
 	}fields;
@@ -209,19 +225,15 @@ typedef union
 #define PCA9685_ALL_LED_OFF_L 	0xFC 	//load all the LEDn_OFF registers, byte 0
 #define PCA9685_ALL_LED_OFF_H 	0xFD 	//load all the LEDn_OFF registers, byte 1
 
-typedef union
-{
-	struct
-	{
+typedef union {
+	struct {
 		uint8_t value:8;
 	}fields;
 	uint8_t raw;
 }PCA9685_LED_ON_L_t;
 
-typedef union
-{
-	struct
-	{
+typedef union {
+	struct {
 		uint8_t value:4;
 		uint8_t fullOn:1;
 		uint8_t reserved:3;
@@ -229,25 +241,48 @@ typedef union
 	uint8_t raw;
 }PCA9685_LED_ON_H_t;
 
-typedef union
-{
-	struct
-	{
+typedef union {
+	struct {
 		uint8_t value:8;
 	}fields;
 	uint8_t raw;
 }PCA9685_LED_OFF_L_t;
 
-typedef union
-{
-	struct
-	{
+typedef union {
+	struct {
 		uint8_t value:4;
-		uint8_t fullOn:1;
+		uint8_t fullOff:1;
 		uint8_t reserved:3;
 	}fields;
 	uint8_t raw;
 }PCA9685_LED_OFF_H_t;
+
+typedef struct {
+    uint8_t ON_L;
+    uint8_t ON_H;
+    uint8_t OFF_L;
+    uint8_t OFF_H;
+}PCA9685_ChannelRegisters_t;
+
+typedef enum {
+    ch0,
+    ch1,
+    ch2,
+    ch3,
+    ch4,
+    ch5,
+    ch6,
+    ch7,
+    ch8,
+    ch9,
+    ch10,
+    ch11,
+    ch12,
+    ch13,
+    ch14,
+    ch15,
+    all
+}PCA9685_Channel_e;
 
 // ~~~~~~~~~~~~~~~~~~
 // PRESCALER REGISTER
@@ -268,13 +303,14 @@ typedef union
 /*
 /   PROTOTYPES
 */
+
 uint8_t PCA9685_init(uint8_t i2cAddress, uint8_t i2cSpeed);
 
 void PCA9685_WriteRegister(uint8_t address, uint8_t value);
 uint8_t PCA9685_ReadRegister(uint8_t address);
 
 void PCA9685_PrintStatus(void);
-void PCA9685_SetPWM(uint8_t channel, uint16_t dutyCycle);
+void PCA9685_SetPWM(PCA9685_Channel_e channel, uint16_t dutyCycle);
 void PCA9685_SetFrequency(uint8_t frequency);
 void PCA9685_Restart(void);
 

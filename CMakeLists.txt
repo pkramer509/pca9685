@@ -11,7 +11,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH "bin")
 
 if (UNIX)
-    set (CMAKE_CXX_FLAGS "-g3 -Wall -O0")
+    set (CMAKE_CXX_FLAGS "-g3 -Wall -pedantic -O0")
 endif ()
 
 # Locate libraries and headers
