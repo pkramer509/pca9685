@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include <pca9685.h>
+#include <signal.h>
+#include <stdlib.h>
 #include "../inc/pca9685.h"
 
 #define ANSI_COLOR_RED     "\x1b[31m"
@@ -10,8 +11,14 @@
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
+
+
+
 int main()
 {
+    atexit(PCA9685_Restart);
+    signal(SIGINT, signal_handler);
+
     uint8_t value;
     PCA9685_MODE1_t mode1;
     PCA9685_MODE2_t mode2;
@@ -47,13 +54,12 @@ int main()
     PCA9685_PrintStatus();
     printf("\n");
 
-    PCA9685_Channel_e channel;
+    while(1) {
+        for (uint16_t i=0; i <= 4096; i++) {
+            PCA9685_SetPWM(ch0, i);
+        }
+    }
 
-    channel = all;
-
-    value = all;
-
-    printf("%d\n", channel);
 
     printf(ANSI_COLOR_BLUE "Exit\n" ANSI_COLOR_RESET);
     return 0;

@@ -18,7 +18,6 @@
 #include <stdio.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
-#include <pca9685.h>
 
 #include "../inc/pca9685.h"
 
@@ -135,6 +134,11 @@ void PCA9685_SetPWM(PCA9685_Channel_e channel, uint16_t dutyCycle) {
     PCA9685_LED_OFF_L_t OFF_L;
     PCA9685_LED_ON_H_t ON_H;
     PCA9685_LED_ON_L_t ON_L;
+
+    OFF_H.raw = 0;
+    OFF_L.raw = 0;
+    ON_H.raw = 0;
+    ON_L.raw = 0;
 
     switch(channel) {
         case ch0:
@@ -257,19 +261,22 @@ void PCA9685_SetPWM(PCA9685_Channel_e channel, uint16_t dutyCycle) {
             break;
     }
 
+    //algorithm is time-on to time-off (delay is defined when time-on >0)
 
     if (dutyCycle == 0) {
         OFF_H.fields.fullOff = 1;
         ON_H.fields.fullOn = 0;
-    } else if (dutyCycle == 4096) {
+    } else if (dutyCycle >= 4096) {
         OFF_H.fields.fullOff = 0;
         ON_H.fields.fullOn = 1;
     } else {
-        OFF_L.fields.value = 0;
-        OFF_H.fields.value = 0;
+        OFF_L.fields.value = (dutyCycle & 0x0FF);
+        OFF_H.fields.value = (dutyCycle & 0xF00) >> 8;
         ON_L.fields.value = 0;
         ON_H.fields.value = 0;
     }
+
+    printf("%d\t%x\t%x\t%x\t%x\t\n", dutyCycle, OFF_H.raw, OFF_L.raw, ON_H.raw, ON_L.raw);
 
     PCA9685_WriteRegister(registers.OFF_H, OFF_H.raw);
     PCA9685_WriteRegister(registers.OFF_L, OFF_L.raw);
@@ -286,9 +293,8 @@ void PCA9685_SetFrequency(uint8_t frequency) {
 
 void PCA9685_Restart() {
 
-    PCA9685_MODE1_t mode1;
+    wiringPiI2CWrite (i2c_fd, 0x00);
+    wiringPiI2CWrite (i2c_fd, 0x06);
 
-    mode1.raw = 0;
-    mode1.fields.restart = 1;
-    wiringPiI2CWriteReg8(i2c_fd, PCA9685_MODE1, mode1.raw);
+    printf("Reset\n");
 }
