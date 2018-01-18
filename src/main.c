@@ -16,8 +16,8 @@
 
 int main()
 {
-    atexit(PCA9685_Restart);
-    signal(SIGINT, signal_handler);
+//    atexit(PCA9685_Restart);
+//    signal(SIGINT, signal_handler);
 
     uint8_t value;
     PCA9685_MODE1_t mode1;
